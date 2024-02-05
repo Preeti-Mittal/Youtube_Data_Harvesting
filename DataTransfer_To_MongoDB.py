@@ -35,7 +35,7 @@ for channel in yt.channel_list:
     playlist_id = channel_info['Playlist_Id']
     playlist_name = fn.get_playlist_details(yt.youtube, playlist_id)['Playlist_Name']
     video_ids_list = fn.get_video_ids(yt.youtube, playlist_id)
-    video_ids_stats = fn.get_video_details(yt.youtube, channel, video_ids_list)
+    video_ids_stats = fn.get_video_details(yt.youtube, video_ids_list)
     document = {"Playlist_id": playlist_id,
                 "Playlist_name": playlist_name,
                 "Videos": video_ids_stats}
@@ -53,7 +53,7 @@ for channel in yt.channel_list:
     playlist_id = channel_info['Playlist_Id']
     playlist_name = fn.get_playlist_details(yt.youtube, playlist_id)['Playlist_Name']
     video_ids_list = fn.get_video_ids(yt.youtube, playlist_id)
-    video_ids_stats = fn.get_video_details(youtube=yt.youtube, channel_id = channel, video_ids = video_ids_list)
+    video_ids_stats = fn.get_video_details_videoidwise(youtube=yt.youtube, channel_id = channel, video_ids = video_ids_list)
     video_id_details.append(video_ids_stats)
 
 videoid_wise_collection = db['VideoId_Wise_Details']

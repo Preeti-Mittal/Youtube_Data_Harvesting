@@ -1,7 +1,8 @@
 from googleapiclient.discovery import build
 import googleapiclient.errors
 
-api_key = 'AIzaSyAD__0JEeF2NVkJMm4H9hxGe-mTPi0EGtY'
+#api_key = 'AIzaSyAD__0JEeF2NVkJMm4H9hxGe-mTPi0EGtY'
+api_key = 'AIzaSyAx7z4m-Jo502ob3rcaz_UFY89L4pZVrLs'
 
 youtube = build(
                 'youtube',

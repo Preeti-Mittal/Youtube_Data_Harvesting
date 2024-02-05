@@ -62,7 +62,36 @@ def get_video_ids(youtube, playlist_id):
 
 # Function to get the details of videos in the playlist
 
-def get_video_details(youtube, channel_id, video_ids):
+# Function to get video data in nested form
+def get_video_details(youtube, video_ids):
+    all_video_stats = []
+    for i in range(0, len(video_ids), 50):
+        request = youtube.videos().list(part='snippet,contentDetails,statistics',
+                                        id=','.join(video_ids[i:i + 50]))
+        response = request.execute()
+
+        for video in response['items']:
+            video_stats = dict(
+                Video_Id=video['id'],
+                Video_Name=video['snippet']['title'],
+                # Video_Description=video['snippet']['description'],
+                Tags=video['snippet'].get('tags', 0),
+                PublishedAt=video['snippet']['publishedAt'],
+                View_Count=video['statistics'].get('viewCount', 0),
+                Like_Count=video['statistics'].get('likeCount', 0),
+                Dislike_Count=video['statistics'].get('dislikeCount', 0),
+                Favorite_Count=video['statistics'].get('favoriteCount', 0),
+                Comment_Count=video['statistics'].get('commentCount', 0),
+                Duration=video['contentDetails'].get('duration', 0),
+                Thumbnail=video['snippet']['thumbnails']['default']['url'],
+                Caption_Status=video['contentDetails'].get('caption', 'None')
+            )
+
+            all_video_stats.append(video_stats)
+    return all_video_stats
+
+# Function to get video_id wise data
+def get_video_details_videoidwise(youtube, channel_id, video_ids):
     channel_response = youtube.channels().list(id=channel_id, part='snippet,statistics,contentDetails')
     channel_data = channel_response.execute()
     Playlist_Id = channel_data['items'][0]['contentDetails']['relatedPlaylists']['uploads']
